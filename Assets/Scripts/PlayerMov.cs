@@ -9,6 +9,9 @@ public class PlayerMov : MonoBehaviour
 {
     private GameObject m_player;
     private Rigidbody m_body;
+    private Camera m_camera;
+
+    public Vector3 SpawnPoint = new Vector3(0, 5, 0);
 
     private CharacterController controller;
     private Vector3 moveDirection = Vector3.zero;
@@ -26,6 +29,7 @@ public class PlayerMov : MonoBehaviour
     void Start()
     {
         m_player = this.gameObject;
+        m_camera = Camera.main;
         m_body = GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
     }
@@ -101,7 +105,6 @@ public class PlayerMov : MonoBehaviour
         {
             moveDirection.y = 10;
             moveDirection.x = -moveDirection.x * 1.5F;
-
         }
     }
     public void WallRunZ()
@@ -147,11 +150,11 @@ public class PlayerMov : MonoBehaviour
             }
         }
         //Run
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             m_speed *= 2;
         }
-        if (Input.GetKeyUp(KeyCode.LeftControl))
+        if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             m_speed /= 2;
         }
@@ -171,7 +174,7 @@ public class PlayerMov : MonoBehaviour
     {
         if (transform.position.y < -5)
         {
-            transform.position = new Vector3(0, 5, 0);
+            transform.position = SpawnPoint;
         }
     }
 }
