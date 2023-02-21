@@ -11,6 +11,7 @@ public class Grappling : MonoBehaviour
     private GameObject End;
 
     private GameObject player;
+    private CharacterController controller;
 
     private GameObject currHit;
 
@@ -19,6 +20,7 @@ public class Grappling : MonoBehaviour
     {
         player = GameObject.Find("Player");
         End = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        controller = player.GetComponent<CharacterController>();
 
         Destroy(End.GetComponent<Collider>());
 
@@ -40,12 +42,18 @@ public class Grappling : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
+            currHit = hit.transform.gameObject;
+            controller.enabled = false;
             LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
-            SpringJoint joint = player.AddComponent<SpringJoint>();
+            lineRenderer.startColor= Color.red;
+            lineRenderer.endColor= Color.red;
+
+            SpringJoint joint = currHit.AddComponent<SpringJoint>();
+            currHit.GetComponent<Rigidbody>().isKinematic = true;
 
             joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = hit.point;
-            currHit = hit.transform.gameObject;
+            joint.connectedBody = player.GetComponent<Rigidbody>();
+
 
 
             float distanceFromPoint = Vector3.Distance(player.transform.position, hit.point);
@@ -53,8 +61,8 @@ public class Grappling : MonoBehaviour
             joint.maxDistance = distanceFromPoint * 0.8f;
             joint.minDistance = distanceFromPoint * 0.25f;
 
-            joint.spring = 4.5f;
-            joint.damper = 7f;
+            joint.spring = 10f;
+            joint.damper = 0.2f;
             joint.massScale = 1f;
 
 
@@ -64,7 +72,7 @@ public class Grappling : MonoBehaviour
             
 
             // set the position
-            lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y-0.5F, transform.position.z));
+            lineRenderer.SetPosition(0, player.transform.position);
             lineRenderer.SetPosition(1, hit.point);
 
             
@@ -72,11 +80,12 @@ public class Grappling : MonoBehaviour
         if (Input.GetMouseButtonUp(1))
         {
             Destroy(GetComponent<LineRenderer>());
-            Destroy(player.GetComponent<SpringJoint>());
+            Destroy(currHit.GetComponent<SpringJoint>());
+            controller.enabled = true;
         }
         try
         {
-            GetComponent<LineRenderer>().SetPosition(0, new Vector3(transform.position.x, transform.position.y - 0.5F, transform.position.z));
+            GetComponent<LineRenderer>().SetPosition(0, player.transform.position);
         }
         catch (System.Exception)
         {

@@ -46,16 +46,16 @@ public class PlayerMov : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "floor")
+        if (collision.gameObject.tag == "floor")
         {
             jumping = false;
         }
-        else if (collision.gameObject.name == "wall_x")
+        else if (collision.gameObject.tag == "wall_x")
         {
             jumpCount = 0;
             moveDirection.x *= 0.25F;
         }
-        else if (collision.gameObject.name == "wall_z")
+        else if (collision.gameObject.tag == "wall_z")
         {
             jumpCount = 0;
             moveDirection.z *= 0.25F;
@@ -65,11 +65,11 @@ public class PlayerMov : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.name == "wall_x")
+        if (collision.gameObject.tag == "wall_x")
         {
             WallRunX();
 
-        } else if (collision.gameObject.name == "wall_z")
+        } else if (collision.gameObject.tag == "wall_z")
         {
             WallRunZ();
 
@@ -78,7 +78,7 @@ public class PlayerMov : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.name == "wall")
+        if (collision.gameObject.tag.Contains("wall"))
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }
