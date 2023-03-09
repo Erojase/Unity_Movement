@@ -26,6 +26,8 @@ public class PlayerMov : MonoBehaviour
     private bool jumping = false;
     private bool forceWalk = false;
 
+    private bool crouched = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -165,13 +167,23 @@ public class PlayerMov : MonoBehaviour
             }
         }
         //Run
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !crouched)
         {
             m_speed *= 2;
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetKeyUp(KeyCode.LeftShift) && !crouched)
         {
             m_speed /= 2;
+        }
+
+        //Crouch
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            m_player.transform.localScale = transform.localScale / 2;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            m_player.transform.localScale = transform.localScale * 2;
         }
 
 
