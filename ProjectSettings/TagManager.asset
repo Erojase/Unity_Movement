@@ -8,6 +8,7 @@ TagManager:
   - wall_x
   - wall_z
   - Inverse_door
+  - inverse_floor
   layers:
   - Default
   - TransparentFX
