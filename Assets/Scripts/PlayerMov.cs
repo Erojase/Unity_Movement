@@ -24,6 +24,7 @@ public class PlayerMov : MonoBehaviour
 
     private int jumpCount = 0;
     private bool jumping = false;
+    private bool forceWalk = false;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +47,7 @@ public class PlayerMov : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(controller.isGrounded);
         if (collision.gameObject.tag == "floor")
         {
             jumping = false;
@@ -59,6 +61,10 @@ public class PlayerMov : MonoBehaviour
         {
             jumpCount = 0;
             moveDirection.z *= 0.25F;
+        }
+        else if (collision.gameObject.tag == "inverse_floor")
+        {
+            forceWalk = true;
         }
 
     }
@@ -81,6 +87,15 @@ public class PlayerMov : MonoBehaviour
         if (collision.gameObject.tag.Contains("wall"))
         {
             moveDirection.y -= gravity * Time.deltaTime;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag.Contains("Inverse"))
+        {
+            m_player.transform.Rotate(new Vector3(transform.rotation.x, transform.rotation.y + 180, transform.rotation.z + 180));
+            gravity = -gravity;
         }
     }
 
@@ -134,7 +149,7 @@ public class PlayerMov : MonoBehaviour
     public void Moves()
     {
 
-        if (controller.isGrounded)
+        if (controller.isGrounded || forceWalk)
         {
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             moveDirection = transform.TransformDirection(moveDirection) * (m_speed * 5);
