@@ -2698,7 +2698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnPoint: {x: 0, y: 5, z: 0}
   sensitivity: 2
-  m_speed: -2
+  m_speed: -3
   jumpSpeed: 10
   gravity: 20
 --- !u!136 &1127723401

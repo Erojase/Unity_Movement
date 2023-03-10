@@ -22,8 +22,11 @@ public class PlayerMov : MonoBehaviour
     public float jumpSpeed = 1.5F;
     public float gravity = 10.0F;
 
-    private int jumpCount = 0;
-    private bool jumping = false;
+    [Space]
+    [Space]
+    [Space]
+    public int jumpCount = 0;
+    public bool jumping = false;
     private bool forceWalk = false;
 
     private bool crouched = false;
@@ -57,11 +60,13 @@ public class PlayerMov : MonoBehaviour
         else if (collision.gameObject.tag == "wall_x")
         {
             jumpCount = 0;
+            jumping = true;
             moveDirection.x *= 0.25F;
         }
         else if (collision.gameObject.tag == "wall_z")
         {
             jumpCount = 0;
+            jumping = true;
             moveDirection.z *= 0.25F;
         }
         else if (collision.gameObject.tag == "inverse_floor")
@@ -140,7 +145,7 @@ public class PlayerMov : MonoBehaviour
 
     public void DoubleJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && jumping && (jumpCount > 0))
+        if (Input.GetKeyDown(KeyCode.Space) && jumping && (jumpCount >= 0))
         {
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             moveDirection = transform.TransformDirection(moveDirection) * (m_speed * 5);
