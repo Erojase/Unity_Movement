@@ -14,7 +14,7 @@ public class PlayerMov : MonoBehaviour
     public Vector3 SpawnPoint = new Vector3(0, 5, 0);
 
     private CharacterController controller;
-    private Vector3 moveDirection = Vector3.zero;
+    public Vector3 moveDirection = Vector3.zero;
 
     public int sensitivity = 5;
 
@@ -25,6 +25,7 @@ public class PlayerMov : MonoBehaviour
     [Space]
     [Space]
     [Space]
+
     public int jumpCount = 0;
     public bool jumping = false;
     private bool forceWalk = false;
@@ -52,7 +53,6 @@ public class PlayerMov : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(controller.isGrounded);
         if (collision.gameObject.tag == "floor")
         {
             jumping = false;
@@ -97,15 +97,6 @@ public class PlayerMov : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag.Contains("Inverse"))
-        {
-            m_player.transform.Rotate(new Vector3(transform.rotation.x, transform.rotation.y + 180, transform.rotation.z + 180));
-            gravity = -gravity;
-        }
-    }
-
     public void Rotation()
     {
         var c = Camera.main.transform;
@@ -121,7 +112,7 @@ public class PlayerMov : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            moveDirection.y = 0;
+            moveDirection.y = moveDirection.y/1.5F;
         }
         if (Input.GetKey(KeyCode.Space))
         {
@@ -133,7 +124,7 @@ public class PlayerMov : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            moveDirection.y = 0;
+            moveDirection.y = moveDirection.y / 1.5F;
         }
         if (Input.GetKey(KeyCode.Space))
         {
