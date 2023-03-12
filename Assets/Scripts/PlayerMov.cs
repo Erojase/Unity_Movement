@@ -9,7 +9,7 @@ public class PlayerMov : MonoBehaviour
 {
     private GameObject m_player;
     private Rigidbody m_body;
-    private Camera m_camera;
+    private Camera m_camera; 
 
     public Vector3 SpawnPoint = new Vector3(0, 5, 0);
 

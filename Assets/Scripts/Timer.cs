@@ -20,7 +20,6 @@ public class Timer : MonoBehaviour
         if (is_runner)
         {
             timer = GameObject.Find("Tiempo");
-            timer.GetComponent<Renderer>().enabled = true;
         }   
     }
 
