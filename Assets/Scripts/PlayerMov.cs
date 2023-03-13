@@ -55,6 +55,7 @@ public class PlayerMov : MonoBehaviour
         Debug.Log(controller.isGrounded);
         if (collision.gameObject.tag == "floor")
         {
+            jumpCount = 0;
             jumping = false;
         }
         else if (collision.gameObject.tag == "wall_x")
