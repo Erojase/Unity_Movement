@@ -10,7 +10,7 @@ public class Slash : MonoBehaviour
     private Animator animator;
     private Animation slash;
 
-    private Vector3 originPos;
+    public Vector3 originPos;
     private Quaternion originRot;
 
     void Start()
@@ -33,6 +33,8 @@ public class Slash : MonoBehaviour
     {
         if (Input.GetMouseButton(1))
         {
+            originPos = Katana.transform.position;
+            originRot = Katana.transform.rotation;
             animator.enabled = true;
             StartCoroutine(wait());
             
@@ -43,6 +45,7 @@ public class Slash : MonoBehaviour
     {
         yield return new WaitForSeconds(0.6F);
         animator.enabled = false;
+        Debug.Log("Going to " + originPos);
         Katana.transform.position = originPos;
         Katana.transform.rotation = originRot;
     }
