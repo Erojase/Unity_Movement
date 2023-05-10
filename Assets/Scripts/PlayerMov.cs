@@ -43,10 +43,10 @@ public class PlayerMov : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
+    {
         DoubleJump();
         Moves();
-        Rotation();
+        Rotation(); 
 
         Fall();
     }
